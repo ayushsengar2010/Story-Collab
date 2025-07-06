@@ -1,0 +1,27 @@
+services:
+  db:
+    image: postgres
+    container_name: project3
+    restart: always
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: Nikhil@123k
+      POSTGRES_DB: project3postgresql1
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  api:
+    build: .
+    container_name: project3-db
+    restart: always
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: "postgresql://root:Nikhil@123k@db:5432/project3postgresql1?sslmode=disable"
+    ports:
+      - "8080:8080"
+
+volumes:
+  postgres_data:
